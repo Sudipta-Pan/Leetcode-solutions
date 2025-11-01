@@ -1,7 +1,6 @@
 class Solution {
     public int findDuplicate(int[] nums) {
         int i = 0;
-        int k = -1;
         while (i < nums.length) {
             if (nums[i] != i+1){
                 int correct = nums[i] - 1;
@@ -14,7 +13,7 @@ class Solution {
                 i++;
             }
         }
-        return k;
+        return -1;
     }
 
     void swap(int[] arr,int a, int b) {
