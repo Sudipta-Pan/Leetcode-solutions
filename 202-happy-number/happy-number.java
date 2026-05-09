@@ -2,12 +2,10 @@ class Solution {
     public boolean isHappy(int n) {
         int fast = n;
         int slow = n;
-        fast = findSquare(findSquare(fast));
-        slow = findSquare(slow);
-        while(fast != slow){
+        do{
         fast = findSquare(findSquare(fast));
         slow = findSquare(slow);    
-        }
+        }while(fast != slow);
 
         if(slow == 1)
             return true;
