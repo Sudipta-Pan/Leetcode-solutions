@@ -10,46 +10,63 @@
  */
 class Solution {
     public void reorderList(ListNode head) {
+
         if(head == null || head.next == null)
             return;
 
+        // STEP 1: Find middle
         ListNode mid = middleNode(head);
-        ListNode headSec = reverseList(mid);
-        ListNode headFir = head;
-        while(headSec != null && headFir != null) {
-            ListNode temp = headFir.next;
-            headFir.next = headSec;
-            headFir = temp;
 
-            temp = headSec.next;
-            headSec.next = headFir;
-            headSec = temp;
+        // STEP 2: Reverse second half
+        ListNode headSecond = reverseList(mid.next);
+
+        // Break the list
+        mid.next = null;
+
+        // STEP 3: Merge both halves
+        ListNode headFirst = head;
+
+        while(headSecond != null){
+
+            ListNode temp1 = headFirst.next;
+            ListNode temp2 = headSecond.next;
+
+            headFirst.next = headSecond;
+            headSecond.next = temp1;
+
+            headFirst = temp1;
+            headSecond = temp2;
         }
-        if(headFir != null)
-            headFir.next = null;
     }
+
     public ListNode middleNode(ListNode head) {
+
         ListNode s = head;
         ListNode f = head;
-        while(f != null && f.next != null){
-            f = f.next.next;
+
+        while(f.next != null && f.next.next != null){
             s = s.next;
+            f = f.next.next;
         }
+
         return s;
     }
+
     public ListNode reverseList(ListNode head) {
+
         ListNode prev = null;
         ListNode present = head;
-        ListNode next = null;
 
         while(present != null){
-            next = present.next;
+
+            ListNode next = present.next;
+
             present.next = prev;
+
             prev = present;
             present = next;
-            if(next != null)
-                next = next.next;
         }
+
         return prev;
     }
 }
