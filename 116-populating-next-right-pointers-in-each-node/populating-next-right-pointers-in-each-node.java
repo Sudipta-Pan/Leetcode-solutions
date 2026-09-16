@@ -26,31 +26,18 @@ class Solution {
         if(root == null)
             return root;
 
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(root);
-
-        while(!queue.isEmpty()) {
-            int currentLength = queue.size();
-            Node prev = null;
-
-            for(int i = 0; i < currentLength; i++) {
-                Node current = queue.poll();
-                if(current.left != null)
-                    queue.offer(current.left);
-                if(current.right != null)
-                    queue.offer(current.right);
-                
-
-                if(prev != null)
-                    prev.next = current;
-                
-                prev = current;
+        Node leftmost = root;
+        while(leftmost.left != null) {
+            Node current = leftmost;
+            while(current != null) {
+                current.left.next = current.right; 
+                if(current.next != null)
+                    current.right.next = current.next.left;
+                current = current.next;
             }
+            leftmost = leftmost.left;
         }
-        
-        return root;
-    }
-    void join_nodes(Node current, Node next1) {
-        current.next = next1;
+            
+        return root;    
     }
 }
